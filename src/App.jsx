@@ -7,22 +7,23 @@ const api = new BalldontlieAPI({ apiKey: API_KEY})
 const teams = await api.mlb.getTeams()
 const teamsData = teams.data
 
-const teamPerId = teamsData.map(team => {
-  return team.display_name
-})
 
 function App() {
 
-  console.log(teamPerId)
-
   const [team, setTeam] = useState(teams.data)
+
   const [counter, setCounter] = useState(0)
 
-  // useEffect(() => {
-  //   fetch(`https://api.balldontlie.io/mlb/v1/teams/${counter}`)
-  //     .then(res => res.json())
-  //     .then(data => setTeam(data))
-  // }, [])
+  const teamsPerID = team.map(t => {
+
+    console.log()
+
+    return {
+      id: t.id,
+      name: t.display_name,
+      abbreviation: t.abbreviation,
+    }
+  })
 
   function handleCounter() {
     setCounter(counter + 1)
@@ -30,8 +31,10 @@ function App() {
 
   return (
     <>
-    <pre>{JSON.stringify(team, null, 2)}</pre>
+    
+    {  teamsPerID.forEach(function (team) {counter == team.id && <pre>{JSON.stringify(team, null, 2)}</pre>})}
     <button onClick={handleCounter}>+</button>
+    <p>{counter}</p>
     </>
   )
 }
