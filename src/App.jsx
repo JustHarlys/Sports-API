@@ -3,40 +3,49 @@ import { BalldontlieAPI } from '@balldontlie/sdk'
 import './App.css'
 
 const API_KEY = '249fa7a2-ba22-4dc2-ae69-7f916cfaf2d4'
-const api = new BalldontlieAPI({ apiKey: API_KEY})
-const teams = await api.mlb.getTeams()
-const teamsData = teams.data
-
 
 function App() {
 
-  const [team, setTeam] = useState(teams.data)
+  const [teams, setTeams] = useState([])
 
   const [counter, setCounter] = useState(0)
 
-  const teamsPerID = team.map(t => {
-
-    console.log()
-
-    return {
-      id: t.id,
-      name: t.display_name,
-      abbreviation: t.abbreviation,
+  useEffect(()=> {
+    const api = new BalldontlieAPI({ apiKey: API_KEY})
+    
+    const fetchTeams = async () => {
+      const teamsRes = await api.mlb.getTeams()
+      const teamsData = teamsRes.data
+      setTeams(teamsData)
     }
-  })
 
-  function handleCounter() {
-    setCounter(counter + 1)
-  }
+    fetchTeams();
+  }, [])
+
+  const randomTeamOne = Math.floor(Math.random() * teams.length)
+  const randomTeamTwo = Math.floor(Math.random() * teams.length)
+
+  const selectedNumbers = new Set([randomTeamOne, randomTeamTwo])
+  const [firstNumber, secondNumber] = [...selectedNumbers]
+
+
+  const selectFirstTeam = teams.find(t => t.id === firstNumber)
+  const selectSecondTeam = teams.find(t => t.id === secondNumber)
 
   return (
     <>
-    
-    {  teamsPerID.forEach(function (team) {counter == team.id && <pre>{JSON.stringify(team, null, 2)}</pre>})}
-    <button onClick={handleCounter}>+</button>
-    <p>{counter}</p>
+      {teams.length === 0 ? (
+        <p>Cargando equipos...</p>
+      ) : (
+        <>
+          <p>{selectFirstTeam?.display_name}</p> vs <p>{selectSecondTeam?.display_name}</p>
+          {selectFirstTeam && <pre>{JSON.stringify(selectFirstTeam, null, 2)}</pre>}
+          {selectSecondTeam && <pre>{JSON.stringify(selectSecondTeam, null, 2)}</pre>}
+        </>
+      )}
     </>
-  )
+  );
+  
 }
 
 export default App
