@@ -1,7 +1,7 @@
 
 function LiveGame({firstTeam, secondTeam}) {
   return (
-    <table style={{width: '99%'}}>
+    <table style={{width: '99%'}} className="big-table">
       <thead>
 
       <tr>

@@ -128,7 +128,82 @@ button:hover {
     color: white;
 }
 
-table, th, td {
+.big-table, .big-table > thead > tr > th, .big-table > thead > tr > td {
     border: 1px solid white;
     color: white;
 }
+
+.scoreboard {
+    border-collapse: collapse;
+}
+
+.scoreboard td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+.scoreboard > thead > tr > .bases {
+    padding: 0;
+    
+}
+
+
+
+.diamond-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+  }
+
+  .base {
+    width: 30px;
+    height: 30px;
+    background-color: #888585;
+    border: none;
+    transform: rotate(45deg); 
+    position: absolute;
+  }
+
+  .occupied {
+    background-color: #dadd16; 
+  }
+
+  .first {
+    top: 70%;
+    left: 50%;
+    margin-left: 20px;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  .second {
+    top: 48%;
+    left: 45%;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  .third {
+    top: 70%;
+    left: 21%;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  .innings {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    text-align: center;
+    align-items: center;
+  }
+  .arrows > p {
+    margin: 0;
+    height: 10px;
+  }
+
+  .arrows > p:first-child {
+    transform: rotate(270deg);
+  }
+
+  .arrows > p:last-child {
+    transform: rotate(270deg);
+  }

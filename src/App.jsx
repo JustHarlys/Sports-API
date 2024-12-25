@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { BalldontlieAPI } from '@balldontlie/sdk'
 import './App.css'
 import LiveGame from './Components/LiveGame'
+import ScoreBoard from './Components/ScoreBoard'
 
 const API_KEY = '249fa7a2-ba22-4dc2-ae69-7f916cfaf2d4'
 
@@ -104,7 +105,6 @@ function App() {
 
   const possibilities = ["Out", "Hit", "Double", "Triple", "HR", "Walk", "HBP", "Out", "Hit", "Out", "Out", "Out", "Hit", "Out", "Out", "Out", "Out"]
 
-  
 
   return (
     <>
@@ -113,7 +113,7 @@ function App() {
           
           
           <div className='play-ball-container'>
-             {} 
+            <ScoreBoard firstAbbreviation={selectFirstTeam.abbreviation} secondAbbreviation={selectSecondTeam.abbreviation}/>
             <LiveGame firstTeam={selectFirstTeam.display_name} secondTeam={selectSecondTeam.display_name}/>
           </div>
         ) :
