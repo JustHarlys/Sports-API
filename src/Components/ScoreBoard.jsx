@@ -1,10 +1,10 @@
-import React from 'react'
-
 function ScoreBoard({firstAbbreviation, secondAbbreviation}) {
   return (
     <table className='scoreboard'>
         <thead>
+          
             <tr>
+            <i className='fa-solid fa-circle-up' style={{color: 'yellow'}}></i>
                 <td>{firstAbbreviation}</td>
                 <td>0</td>
                 <td>1</td>
@@ -17,6 +17,7 @@ function ScoreBoard({firstAbbreviation, secondAbbreviation}) {
       </td>
             </tr>
             <tr>
+                <i className='fa-solid fa-circle-up' style={{color: 'yellow'}}></i>
                 <td>{secondAbbreviation}</td>
                 <td>0</td>
                 <td>. . .</td>

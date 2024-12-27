@@ -11,6 +11,7 @@ function App() {
   const [teams, setTeams] = useState([])
   const [firstTeamSelected, setFirstTeamSelected] = useState(false)
   const [secondTeamSelected, setSecondTeamSelected] = useState(false)
+  const [outs, setOuts] = useState(1)
 
   const [counterFirstTeam, setCounterFirstTeam] = useState(1)
   const [counterSecondTeam, setCounterSecondTeam] = useState(1)
@@ -106,7 +107,14 @@ function App() {
   const possibilities = ["Out", "Hit", "Double", "Triple", "HR", "Walk", "HBP", "Out", "Hit", "Out", "Out", "Out", "Hit", "Out", "Out", "Out", "Out"]
 
   function getPlay() {
-    alert(possibilities[Math.floor(Math.random() * possibilities.length)])
+
+    const play = possibilities[Math.floor(Math.random() * possibilities.length)]
+    alert(play)
+
+    if (play === 'Out') {
+      setOuts(outs + 1)
+      console.log(outs)
+    }
   }
 
   return (
@@ -116,7 +124,7 @@ function App() {
           
           
           <div className='play-ball-container'>
-            <ScoreBoard firstAbbreviation={selectFirstTeam.abbreviation} secondAbbreviation={selectSecondTeam.abbreviation}/>
+            <ScoreBoard firstAbbreviation={selectFirstTeam.abbreviation} secondAbbreviation={selectSecondTeam.abbreviation} outs={outs}/>
             <LiveGame firstTeam={selectFirstTeam.display_name} secondTeam={selectSecondTeam.display_name}/>
           
             <button onClick={getPlay}>Make a Play</button>

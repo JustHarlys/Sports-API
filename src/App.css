@@ -80,10 +80,6 @@ button:hover {
     color: white;
 }
 
-.select-first-team > img {
-
-}
-
 .select-second-team {
     display: flex;
     gap: 20px;
@@ -145,8 +141,8 @@ button:hover {
 
 .scoreboard > thead > tr > .bases {
     padding: 0;
-    
 }
+
 
 
 
@@ -175,6 +171,7 @@ button:hover {
     margin-left: 20px;
     transform: translate(-50%, -50%) rotate(45deg);
   }
+
 
   .second {
     top: 48%;
