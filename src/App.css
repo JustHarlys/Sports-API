@@ -207,3 +207,7 @@ button:hover {
   .arrows > p:last-child {
     transform: rotate(270deg);
   }
+
+  .scoreboard {
+    color: white;
+  }

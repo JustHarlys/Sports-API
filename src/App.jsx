@@ -25,8 +25,8 @@ function App() {
         "https://loodibee.com/wp-content/uploads/mlb-atlanta-braves-logo.png",
         "https://loodibee.com/wp-content/uploads/mlb-baltimore-orioles-logo.png",
         "https://loodibee.com/wp-content/uploads/mlb-boston-red-sox-logo.png",
-        "https://loodibee.com/wp-content/uploads/mlb-chicago-white-sox-logo.png",
         "https://loodibee.com/wp-content/uploads/mlb-chicago-cubs-logo.png",
+        "https://loodibee.com/wp-content/uploads/mlb-chicago-white-sox-logo.png",
         "https://loodibee.com/wp-content/uploads/mlb-cincinnati-reds-logo.png",
         "https://loodibee.com/wp-content/uploads/mlb-cleveland-guardians-logo.png",
         "https://loodibee.com/wp-content/uploads/mlb-colorado-rockies-logo.png",
@@ -105,6 +105,9 @@ function App() {
 
   const possibilities = ["Out", "Hit", "Double", "Triple", "HR", "Walk", "HBP", "Out", "Hit", "Out", "Out", "Out", "Hit", "Out", "Out", "Out", "Out"]
 
+  function getPlay() {
+    alert(possibilities[Math.floor(Math.random() * possibilities.length)])
+  }
 
   return (
     <>
@@ -115,6 +118,8 @@ function App() {
           <div className='play-ball-container'>
             <ScoreBoard firstAbbreviation={selectFirstTeam.abbreviation} secondAbbreviation={selectSecondTeam.abbreviation}/>
             <LiveGame firstTeam={selectFirstTeam.display_name} secondTeam={selectSecondTeam.display_name}/>
+          
+            <button onClick={getPlay}>Make a Play</button>
           </div>
         ) :
       

@@ -8,11 +8,11 @@ function ScoreBoard({firstAbbreviation, secondAbbreviation}) {
                 <td>{firstAbbreviation}</td>
                 <td>0</td>
                 <td>1</td>
-                <td colspan="3" className='bases'>
-        <div class="diamond-container">
-          <div class="base first"></div>  
-          <div class="base second occupied"></div> 
-          <div class="base third"></div> 
+                <td colSpan="3" className='bases'>
+        <div className="diamond-container">
+          <div className="base first"></div>  
+          <div className="base second occupied"></div> 
+          <div className="base third"></div> 
         </div>
       </td>
             </tr>
@@ -21,7 +21,7 @@ function ScoreBoard({firstAbbreviation, secondAbbreviation}) {
                 <td>0</td>
                 <td>. . .</td>
                 <td className='innings'>
-                    <div class="arrows">
+                    <div className="arrows">
                         <p>{'>'}</p>
                         <p>{'<'}</p>
                     </div>
