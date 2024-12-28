@@ -11,7 +11,9 @@ function App() {
   const [teams, setTeams] = useState([])
   const [firstTeamSelected, setFirstTeamSelected] = useState(false)
   const [secondTeamSelected, setSecondTeamSelected] = useState(false)
-  const [outs, setOuts] = useState(1)
+  const [outs, setOuts] = useState(0)
+  const [batting, setBatting] = useState(false)
+
 
   const [counterFirstTeam, setCounterFirstTeam] = useState(1)
   const [counterSecondTeam, setCounterSecondTeam] = useState(1)
@@ -115,6 +117,14 @@ function App() {
       setOuts(outs + 1)
       console.log(outs)
     }
+    else {
+      return play
+    }
+
+    if (outs === 2) {
+      setBatting(prevState => !prevState)
+      setOuts(0)
+    }
   }
 
   return (
@@ -124,7 +134,7 @@ function App() {
           
           
           <div className='play-ball-container'>
-            <ScoreBoard firstAbbreviation={selectFirstTeam.abbreviation} secondAbbreviation={selectSecondTeam.abbreviation} outs={outs}/>
+            <ScoreBoard firstAbbreviation={selectFirstTeam.abbreviation} secondAbbreviation={selectSecondTeam.abbreviation} outs={outs} batting={batting}/>
             <LiveGame firstTeam={selectFirstTeam.display_name} secondTeam={selectSecondTeam.display_name}/>
           
             <button onClick={getPlay}>Make a Play</button>
@@ -146,7 +156,7 @@ function App() {
 
           <div className='team-container'>
 
-          <img src={selectFirstTeam.logo} alt={`Logo de ${selectFirstTeam.display_name}`} width={240}/>
+          <img src={selectFirstTeam.logo} alt={`Logo de ${selectFirstTeam.display_name}`}  className='team-logo'/>
           <div className='select-first-team'>
           {firstTeamSelected ? ""  : <button onClick={toggleLeftFirstCounter}>{'<'}</button>}
           <p>{selectFirstTeam?.display_name}</p> 
@@ -160,7 +170,7 @@ function App() {
 
 
           <div className='team-container'>
-          <img src={selectSecondTeam.logo} alt={`Logo de ${selectSecondTeam.display_name}`} width={240}/>
+          <img src={selectSecondTeam.logo} alt={`Logo de ${selectSecondTeam.display_name}`}  className='team-logo'/>
           <div className='select-second-team'>
           {secondTeamSelected ? "" : <button onClick={toggleLeftSecondCounter}>{'<'}</button>}
           <p>{selectSecondTeam?.display_name}</p>

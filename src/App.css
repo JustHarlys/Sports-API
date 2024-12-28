@@ -129,6 +129,10 @@ button:hover {
     color: white;
 }
 
+.big-table {
+    width: 60%;
+}
+
 .scoreboard {
     border-collapse: collapse;
 }
@@ -142,8 +146,6 @@ button:hover {
 .scoreboard > thead > tr > .bases {
     padding: 0;
 }
-
-
 
 
 .diamond-container {
@@ -208,3 +210,64 @@ button:hover {
   .scoreboard {
     color: white;
   }
+
+.fa-circle-up {
+    transform: rotate(90deg);
+}
+
+.team-logo {
+    width: 240px;
+}
+
+@media only screen and (max-width: 768px) {
+    .teams-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .select-first-team, .select-second-team {
+        gap: 20px;
+    }
+
+    .team-logo {
+        width: 150px;
+    }
+
+    .big-table {
+        width: 88%;
+    }
+
+    .diamond-container {
+        width: 50px;
+        height: 50px;
+    }
+
+    .base {
+        width: 15px;
+        height: 15px;
+    }
+
+    .first {
+        top: 70%;
+        left: 50%;
+        margin-left: 10px;
+    }
+
+    .second {
+        top: 48%;
+        left: 45%;
+    }
+
+    .third {
+        top: 70%;
+        left: 21%;
+    }
+
+    .innings {
+        flex-direction: column;
+    }
+
+    .arrows {
+        display: none;
+    }
+}
