@@ -1,5 +1,5 @@
 
-function ScoreBoard({firstAbbreviation, secondAbbreviation, batting, outs}) {
+function ScoreBoard({firstAbbreviation, secondAbbreviation, batting, outs, innings}) {
   return (
     <table className='scoreboard'>
         <thead>
@@ -21,13 +21,15 @@ function ScoreBoard({firstAbbreviation, secondAbbreviation, batting, outs}) {
                 
                 <td>{batting && <i className='fa-solid fa-circle-up' style={{color: 'yellow'}}></i>} {secondAbbreviation}</td>
                 <td>0</td>
-                <td>{".".repeat(outs)}</td>
+                <td style={{color: "yellow", fontSize: 6, gap: 5}}>
+                {Array(outs).fill().map((_, i) => <i key={i} className="fa-solid fa-circle"></i>)}
+                </td>
                 <td className='innings'>
                     <div className="arrows">
-                        <p>{'>'}</p>
-                        <p>{'<'}</p>
+                        <p style={!batting ? {color: "yellow"} : {}}>{'>'}</p>
+                        <p style={batting ? {color: "yellow"} : {}}>{'<'}</p>
                     </div>
-                    <p>7</p>
+                    <p>{innings}</p>
                 </td>
             </tr>
         </thead>

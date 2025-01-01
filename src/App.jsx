@@ -3,6 +3,7 @@ import { BalldontlieAPI } from '@balldontlie/sdk'
 import './App.css'
 import LiveGame from './Components/LiveGame'
 import ScoreBoard from './Components/ScoreBoard'
+import { useFormState } from 'react-dom'
 
 const API_KEY = '249fa7a2-ba22-4dc2-ae69-7f916cfaf2d4'
 
@@ -13,6 +14,12 @@ function App() {
   const [secondTeamSelected, setSecondTeamSelected] = useState(false)
   const [outs, setOuts] = useState(0)
   const [batting, setBatting] = useState(false)
+  const [play, setPlay] = useState("")
+  const [innings, setInnings] = useState(0)
+  const [hitsFirstTeam, setHitsFirstTeam] = useState(0)
+  const [hitsSecondTeam, setHitsSecondTeam] = useState(0)
+
+
 
 
   const [counterFirstTeam, setCounterFirstTeam] = useState(1)
@@ -106,16 +113,16 @@ function App() {
     setSecondTeamSelected(prevState => !prevState)
   }
 
-  const possibilities = ["Out", "Hit", "Double", "Triple", "HR", "Walk", "HBP", "Out", "Hit", "Out", "Out", "Out", "Hit", "Out", "Out", "Out", "Out"]
+  const possibilities = ["Fly Out", "Hit", "Double", "Triple", "HR", "Walk", "HBP", "Ground Out", "Hit", "Pop Out", "Strike Out", "Line Out", "Hit", "Fly Out", "Line Out", "Strike Out", "Strike Out"]
 
+  const playProb = possibilities[Math.floor(Math.random() * possibilities.length)]
+  
   function getPlay() {
 
-    const play = possibilities[Math.floor(Math.random() * possibilities.length)]
-    alert(play)
-
-    if (play === 'Out') {
+    setPlay(playProb)
+    
+    if (play.includes("Out")) {
       setOuts(outs + 1)
-      console.log(outs)
     }
     else {
       return play
@@ -124,8 +131,30 @@ function App() {
     if (outs === 2) {
       setBatting(prevState => !prevState)
       setOuts(0)
+      setPlay(`End of turn for: ${batting ? selectSecondTeam.display_name : selectFirstTeam.display_name} Next up: ${batting ? selectFirstTeam.display_name : selectSecondTeam.display_name}`)
+      console.log(batting)
     }
   }
+
+  useEffect(() => {
+  if (play === "Hit" || play === "Double" || play === "Triple" || play === "HR") {
+    if (batting) {
+      setHitsSecondTeam(hitsSecondTeam + 1)
+    }
+    else {
+      setHitsFirstTeam(hitsFirstTeam + 1)
+    }
+    }
+  }, [play])
+
+
+  useEffect(() =>{
+    if (!batting === true) {
+      setInnings(innings + 1)
+    }
+  }, [batting])
+
+
 
   return (
     <>
@@ -134,10 +163,14 @@ function App() {
           
           
           <div className='play-ball-container'>
-            <ScoreBoard firstAbbreviation={selectFirstTeam.abbreviation} secondAbbreviation={selectSecondTeam.abbreviation} outs={outs} batting={batting}/>
-            <LiveGame firstTeam={selectFirstTeam.display_name} secondTeam={selectSecondTeam.display_name}/>
+            <ScoreBoard firstAbbreviation={selectFirstTeam.abbreviation} secondAbbreviation={selectSecondTeam.abbreviation} outs={outs} batting={batting} innings={innings}/>
+            <LiveGame firstTeam={selectFirstTeam.display_name} secondTeam={selectSecondTeam.display_name} hitsFirstTeam={hitsFirstTeam} hitsSecondTeam={hitsSecondTeam}/>
           
             <button onClick={getPlay}>Make a Play</button>
+            <div>
+              <h4 style={{color: "white"}}>Play made</h4>
+              <p style={{color: "white"}}>{play}</p>
+            </div>
           </div>
         ) :
       
@@ -156,6 +189,7 @@ function App() {
 
           <div className='team-container'>
 
+          <h3 style={{color: 'white'}}>AWAY</h3>
           <img src={selectFirstTeam.logo} alt={`Logo de ${selectFirstTeam.display_name}`}  className='team-logo'/>
           <div className='select-first-team'>
           {firstTeamSelected ? ""  : <button onClick={toggleLeftFirstCounter}>{'<'}</button>}
@@ -170,6 +204,7 @@ function App() {
 
 
           <div className='team-container'>
+          <h3 style={{color: "white"}}>HOME</h3>
           <img src={selectSecondTeam.logo} alt={`Logo de ${selectSecondTeam.display_name}`}  className='team-logo'/>
           <div className='select-second-team'>
           {secondTeamSelected ? "" : <button onClick={toggleLeftSecondCounter}>{'<'}</button>}

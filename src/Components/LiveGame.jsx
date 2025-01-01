@@ -1,5 +1,5 @@
 
-function LiveGame({firstTeam, secondTeam}) {
+function LiveGame({firstTeam, secondTeam, hitsFirstTeam, hitsSecondTeam}) {
   return (
     <table className="big-table">
       <thead>
@@ -29,7 +29,7 @@ function LiveGame({firstTeam, secondTeam}) {
         <td>0</td>
         <td>0</td>
         <td>0</td>
-        <td>0</td>
+        <td>{hitsFirstTeam}</td>
         <td>0</td>
       </tr>
       <tr>
@@ -43,7 +43,7 @@ function LiveGame({firstTeam, secondTeam}) {
         <td>0</td>  
         <td>0</td>  
         <td>0</td>  
-        <td>0</td>  
+        <td>{hitsSecondTeam}</td>  
         <td>0</td>  
       </tr>
       </thead>
