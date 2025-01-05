@@ -136,16 +136,16 @@ function App() {
         </>
       );
           }
-    if (innings >= 2 && runsFirstTeam > runsSecondTeam && batting === true && outs === 2) {
+    if (innings >= 9 && runsFirstTeam > runsSecondTeam && batting === true && outs === 2) {
       setPlay(`End of the game. ${selectFirstTeam.display_name} wins!`)
       setWinner(true)
     }
-    if (innings >= 2 && runsFirstTeam < runsSecondTeam && batting === false && outs === 2) {
+    if (innings >= 9 && runsFirstTeam < runsSecondTeam && batting === false && outs === 2) {
       setPlay(`End of the game. ${selectSecondTeam.display_name} wins!`)
       setWinner(true)
     }
     if (
-      (innings > 2 || innings === 2) && 
+      (innings > 9 || innings === 9) && 
       runsSecondTeam === runsFirstTeam && 
       batting === true && 
       outs < 2 &&
