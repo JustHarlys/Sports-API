@@ -29,10 +29,12 @@ button {
     color: #fff;
     cursor: pointer;
     padding: 10px 20px;
+    transition: 0.3s ease all;
 }
 
 button:hover {
     background-color: #0056b3;
+
 }
 
 .teams-container {
@@ -130,9 +132,6 @@ button:hover {
     color: white;
 }
 
-.big-table {
-    width: 60%;
-}
 
 .scoreboard {
     border-collapse: collapse;
@@ -148,45 +147,6 @@ button:hover {
     padding: 0;
 }
 
-
-.diamond-container {
-    position: relative;
-    width: 100px;
-    height: 100px;
-  }
-
-  .base {
-    width: 30px;
-    height: 30px;
-    background-color: #888585;
-    border: none;
-    transform: rotate(45deg); 
-    position: absolute;
-  }
-
-  .occupied {
-    background-color: #dadd16; 
-  }
-
-  .first {
-    top: 70%;
-    left: 50%;
-    margin-left: 20px;
-    transform: translate(-50%, -50%) rotate(45deg);
-  }
-
-
-  .second {
-    top: 48%;
-    left: 45%;
-    transform: translate(-50%, -50%) rotate(45deg);
-  }
-
-  .third {
-    top: 70%;
-    left: 21%;
-    transform: translate(-50%, -50%) rotate(45deg);
-  }
 
   .innings {
     display: flex;
@@ -220,6 +180,12 @@ button:hover {
     width: 240px;
 }
 
+.endgame-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 @media only screen and (max-width: 768px) {
     .teams-container {
         flex-direction: column;
@@ -234,42 +200,8 @@ button:hover {
         width: 150px;
     }
 
-    .big-table {
-        width: 88%;
-    }
-
-    .diamond-container {
-        width: 50px;
-        height: 50px;
-    }
-
-
-    .base {
-        width: 15px;
-        height: 15px;
-    }
-
-    .first {
-        top: 70%;
-        left: 50%;
-        margin-left: 10px;
-    }
-
-    .second {
-        top: 48%;
-        left: 45%;
-    }
-
-    .third {
-        top: 70%;
-        left: 21%;
-    }
-
-    .innings {
-        flex-direction: column;
-    }
-
-    .arrows {
-        display: none;
+    .endgame-buttons {
+        width: 50%;
+        margin: 0 auto;
     }
 }

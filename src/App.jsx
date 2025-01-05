@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react'
 import { BalldontlieAPI } from '@balldontlie/sdk'
 import './App.css'
-import LiveGame from './Components/LiveGame'
 import ScoreBoard from './Components/ScoreBoard'
-import { useFormState } from 'react-dom'
 
 const API_KEY = '249fa7a2-ba22-4dc2-ae69-7f916cfaf2d4'
 
@@ -16,10 +14,9 @@ function App() {
   const [batting, setBatting] = useState(false)
   const [play, setPlay] = useState("")
   const [innings, setInnings] = useState(0)
-  const [hitsFirstTeam, setHitsFirstTeam] = useState(0)
-  const [hitsSecondTeam, setHitsSecondTeam] = useState(0)
-
-
+  const [runsFirstTeam, setRunsFirstTeam] = useState(0)
+  const [runsSecondTeam, setRunsSecondTeam] = useState(0)
+  const [winner, setWinner] = useState(false)
 
 
   const [counterFirstTeam, setCounterFirstTeam] = useState(1)
@@ -113,16 +110,16 @@ function App() {
     setSecondTeamSelected(prevState => !prevState)
   }
 
-  const possibilities = ["Fly Out", "Hit", "Double", "Triple", "HR", "Walk", "HBP", "Ground Out", "Hit", "Pop Out", "Strike Out", "Line Out", "Hit", "Fly Out", "Line Out", "Strike Out", "Strike Out"]
+  const possibilities = ["Fly Out", "Run", "Run", "Run", "Run", "Ground Out", "Run", "Pop Out", "Strike Out", "Line Out", "Run", "Fly Out", "Line Out", "Strike Out", "Strike Out"]
 
-  const playProb = possibilities[Math.floor(Math.random() * possibilities.length)]
   
   function getPlay() {
+    const playProb = possibilities[Math.floor(Math.random() * possibilities.length)]
 
     setPlay(playProb)
     
     if (play.includes("Out")) {
-      setOuts(outs + 1)
+      setOuts((prevOuts) => prevOuts + 1)
     }
     else {
       return play
@@ -131,20 +128,71 @@ function App() {
     if (outs === 2) {
       setBatting(prevState => !prevState)
       setOuts(0)
-      setPlay(`End of turn for: ${batting ? selectSecondTeam.display_name : selectFirstTeam.display_name} Next up: ${batting ? selectFirstTeam.display_name : selectSecondTeam.display_name}`)
-      console.log(batting)
+      setPlay(
+        <>
+          End of turn for: {batting ? selectSecondTeam.display_name : selectFirstTeam.display_name}
+          <br />
+          Next up: {batting ? selectFirstTeam.display_name : selectSecondTeam.display_name}
+        </>
+      );
+          }
+    if (innings >= 2 && runsFirstTeam > runsSecondTeam && batting === true && outs === 2) {
+      setPlay(`End of the game. ${selectFirstTeam.display_name} wins!`)
+      setWinner(true)
+    }
+    if (innings >= 2 && runsFirstTeam < runsSecondTeam && batting === false && outs === 2) {
+      setPlay(`End of the game. ${selectSecondTeam.display_name} wins!`)
+      setWinner(true)
+    }
+    if (
+      (innings > 2 || innings === 2) && 
+      runsSecondTeam === runsFirstTeam && 
+      batting === true && 
+      outs < 2 &&
+      playProb ==='Run'
+  ) {
+      setWinner(true);
+      setRunsSecondTeam((prevRuns) => prevRuns + 1);
+      setPlay(`Walk-off win! ${selectSecondTeam.display_name} wins in extra innings!`);
+      return;
+  }
+}
+
+  function resetGame() {
+    if (winner) {
+
+      setOuts(0)
+      setBatting(false)
+      setPlay("")
+      setInnings(0)
+      setRunsFirstTeam(0)
+      setRunsSecondTeam(0)
+      setWinner(false)
     }
   }
 
+  function reselectTeams() {
+    setSecondTeamSelected(false)
+    setFirstTeamSelected(false)
+    setOuts(0)
+    setBatting(false)
+    setPlay("")
+    setInnings(0)
+    setRunsFirstTeam(0)
+    setRunsSecondTeam(0)
+    setWinner(false)
+  }
+
   useEffect(() => {
-  if (play === "Hit" || play === "Double" || play === "Triple" || play === "HR") {
-    if (batting) {
-      setHitsSecondTeam(hitsSecondTeam + 1)
+    if (play === "Run") {
+      if (batting) {
+        setRunsSecondTeam(runsSecondTeam + 1)
+      }
+      else {
+        setRunsFirstTeam(runsFirstTeam + 1)
+      }
     }
-    else {
-      setHitsFirstTeam(hitsFirstTeam + 1)
-    }
-    }
+
   }, [play])
 
 
@@ -156,6 +204,7 @@ function App() {
 
 
 
+
   return (
     <>
       {
@@ -163,13 +212,17 @@ function App() {
           
           
           <div className='play-ball-container'>
-            <ScoreBoard firstAbbreviation={selectFirstTeam.abbreviation} secondAbbreviation={selectSecondTeam.abbreviation} outs={outs} batting={batting} innings={innings}/>
-            <LiveGame firstTeam={selectFirstTeam.display_name} secondTeam={selectSecondTeam.display_name} hitsFirstTeam={hitsFirstTeam} hitsSecondTeam={hitsSecondTeam}/>
-          
-            <button onClick={getPlay}>Make a Play</button>
+            <ScoreBoard firstAbbreviation={selectFirstTeam.abbreviation} secondAbbreviation={selectSecondTeam.abbreviation} outs={outs} batting={batting} innings={innings} runsFirstTeam={runsFirstTeam} runsSecondTeam={runsSecondTeam}/>          
+            {!winner && <button onClick={getPlay}>Make a Play</button>}
             <div>
               <h4 style={{color: "white"}}>Play made</h4>
               <p style={{color: "white"}}>{play}</p>
+
+              <div className='endgame-buttons'>
+                
+              {winner && <button onClick={resetGame}>Play again</button>}
+              {winner && <button onClick={reselectTeams}>Reselect teams</button>}
+              </div>
             </div>
           </div>
         ) :
@@ -189,7 +242,7 @@ function App() {
 
           <div className='team-container'>
 
-          <h3 style={{color: 'white'}}>AWAY</h3>
+
           <img src={selectFirstTeam.logo} alt={`Logo de ${selectFirstTeam.display_name}`}  className='team-logo'/>
           <div className='select-first-team'>
           {firstTeamSelected ? ""  : <button onClick={toggleLeftFirstCounter}>{'<'}</button>}
@@ -203,8 +256,8 @@ function App() {
           <p className='vs'>vs</p> 
 
 
+
           <div className='team-container'>
-          <h3 style={{color: "white"}}>HOME</h3>
           <img src={selectSecondTeam.logo} alt={`Logo de ${selectSecondTeam.display_name}`}  className='team-logo'/>
           <div className='select-second-team'>
           {secondTeamSelected ? "" : <button onClick={toggleLeftSecondCounter}>{'<'}</button>}
