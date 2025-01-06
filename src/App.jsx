@@ -212,7 +212,7 @@ function App() {
           
           
           <div className='play-ball-container'>
-            <ScoreBoard firstAbbreviation={selectFirstTeam.abbreviation} secondAbbreviation={selectSecondTeam.abbreviation} outs={outs} batting={batting} innings={innings} runsFirstTeam={runsFirstTeam} runsSecondTeam={runsSecondTeam}/>          
+            <ScoreBoard firstAbbreviation={selectFirstTeam.abbreviation} secondAbbreviation={selectSecondTeam.abbreviation} outs={outs} batting={batting} innings={innings} runsFirstTeam={runsFirstTeam} runsSecondTeam={runsSecondTeam} winner={winner}/>          
             {!winner && <button onClick={getPlay}>Make a Play</button>}
             <div>
               <h4 style={{color: "white"}}>Play made</h4>
